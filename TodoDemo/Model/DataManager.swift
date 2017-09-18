@@ -36,7 +36,7 @@ enum StorageType {
     func dataManager() -> DataManager {
         switch self{
         case .realm:
-            return TaskManager.shared
+            return RealmManager.shared
         }
     }
 }

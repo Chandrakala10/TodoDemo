@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		1364D5F51F707F9900B8530E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1364D5F31F707F9900B8530E /* DataManager.swift */; };
 		1364D5F61F707F9900B8530E /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1364D5F41F707F9900B8530E /* Task.swift */; };
+		1364D5F81F70806900B8530E /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1364D5F71F70806900B8530E /* RealmManager.swift */; };
+		1364D5FB1F70808700B8530E /* ErrorDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1364D5F91F70808700B8530E /* ErrorDisplay.swift */; };
+		1364D5FC1F70808700B8530E /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1364D5FA1F70808700B8530E /* TaskViewController.swift */; };
 		139760161F7003200037EAED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139760151F7003200037EAED /* AppDelegate.swift */; };
 		139760181F7003200037EAED /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139760171F7003200037EAED /* MasterViewController.swift */; };
-		1397601A1F7003200037EAED /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139760191F7003200037EAED /* DetailViewController.swift */; };
 		1397601D1F7003200037EAED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1397601B1F7003200037EAED /* Main.storyboard */; };
 		1397601F1F7003200037EAED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1397601E1F7003200037EAED /* Assets.xcassets */; };
 		139760221F7003200037EAED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 139760201F7003200037EAED /* LaunchScreen.storyboard */; };
@@ -43,10 +45,12 @@
 		00CA5226FBBCE75D43E53344 /* Pods-TodoDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoDemoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TodoDemoUITests/Pods-TodoDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1364D5F31F707F9900B8530E /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		1364D5F41F707F9900B8530E /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		1364D5F71F70806900B8530E /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		1364D5F91F70808700B8530E /* ErrorDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorDisplay.swift; sourceTree = "<group>"; };
+		1364D5FA1F70808700B8530E /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		139760121F7003200037EAED /* TodoDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		139760151F7003200037EAED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		139760171F7003200037EAED /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		139760191F7003200037EAED /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		1397601C1F7003200037EAED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1397601E1F7003200037EAED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		139760211F7003200037EAED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 		1364D5F21F707F9900B8530E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1364D5F71F70806900B8530E /* RealmManager.swift */,
 				1364D5F31F707F9900B8530E /* DataManager.swift */,
 				1364D5F41F707F9900B8530E /* Task.swift */,
 			);
@@ -129,9 +134,10 @@
 		139760141F7003200037EAED /* TodoDemo */ = {
 			isa = PBXGroup;
 			children = (
+				1364D5F91F70808700B8530E /* ErrorDisplay.swift */,
+				1364D5FA1F70808700B8530E /* TaskViewController.swift */,
 				139760151F7003200037EAED /* AppDelegate.swift */,
 				139760171F7003200037EAED /* MasterViewController.swift */,
-				139760191F7003200037EAED /* DetailViewController.swift */,
 				1397601B1F7003200037EAED /* Main.storyboard */,
 				1364D5F21F707F9900B8530E /* Model */,
 				1397601E1F7003200037EAED /* Assets.xcassets */,
@@ -477,9 +483,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1397601A1F7003200037EAED /* DetailViewController.swift in Sources */,
+				1364D5F81F70806900B8530E /* RealmManager.swift in Sources */,
+				1364D5FB1F70808700B8530E /* ErrorDisplay.swift in Sources */,
 				1364D5F51F707F9900B8530E /* DataManager.swift in Sources */,
 				1364D5F61F707F9900B8530E /* Task.swift in Sources */,
+				1364D5FC1F70808700B8530E /* TaskViewController.swift in Sources */,
 				139760181F7003200037EAED /* MasterViewController.swift in Sources */,
 				139760161F7003200037EAED /* AppDelegate.swift in Sources */,
 			);
