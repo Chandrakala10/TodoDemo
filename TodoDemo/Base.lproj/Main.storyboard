@@ -86,7 +86,7 @@
                             </barButtonItem>
                             <barButtonItem title="Sort" id="czo-TN-msS">
                                 <connections>
-                                    <action selector="tappedSort" destination="7bK-jq-Zjz" id="AQe-aS-YxN"/>
+                                    <action selector="tappedSort" destination="7bK-jq-Zjz" id="Td5-it-VTA"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>

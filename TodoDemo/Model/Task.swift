@@ -16,12 +16,19 @@ import RealmSwift
 }
 
 class Task: Object {
-    dynamic var name = ""
+    dynamic var name: String = ""
     dynamic var createdAt = Date()
-    dynamic var notes = ""
-    dynamic var priority: Priority = .three
+    dynamic var notes: String = ""
+    dynamic var priority: Priority = .one
     
     override static func primaryKey() -> String? {
         return "name"
+    }
+    
+    convenience init(name: String, notes: String = "", priority: Priority = .one) {
+        self.init()
+        self.name = name
+        self.notes = notes
+        self.priority = priority
     }
 }

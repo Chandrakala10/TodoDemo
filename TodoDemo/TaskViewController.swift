@@ -1,5 +1,5 @@
 //
-//  NewTaskViewController.swift
+//  TaskViewController.swift
 //  TodoDemo
 //
 //  Created by Chandrakala Neerukonda on 9/18/17.
@@ -23,7 +23,6 @@ class TaskViewController: UIViewController, ErrorDisplay {
         didSet {
             notes.isUserInteractionEnabled = isEditing
             priority.isUserInteractionEnabled = isEditing
-            name.borderStyle = isEditing == true ? .roundedRect :.none
             notes.borderStyle = isEditing == true ? .roundedRect :.none
         }
     }
@@ -50,17 +49,30 @@ class TaskViewController: UIViewController, ErrorDisplay {
     
     func configureView() {
         navigationItem.rightBarButtonItem = editButtonItem
+        editButtonItem.action = #selector(tapOnEdit)
         name.text = task.name
         notes.text = task.notes
         priority.selectedSegmentIndex = task.priority.rawValue
-        notes.isUserInteractionEnabled = false
+        name.isUserInteractionEnabled = false
+        name.borderStyle = .none
+    }
+    
+    func tapOnEdit() {
+        defer {
+            isEditing = !isEditing
+        }
+        guard case .view(let old) = state, isEditing else { return }
+        let task = Task(name: name.text!, notes: notes.text ?? "", priority: Priority(rawValue: priority.selectedSegmentIndex)!)
+        do {
+            try type.dataManager().update(old: old, withNew: task)
+        }
+        catch let error {
+            display(error)
+        }
     }
     
     @IBAction func tapOnSave() {
-        let task = Task()
-        task.name = name.text!
-        task.notes = notes.text ?? ""
-        task.priority = Priority(rawValue: priority.selectedSegmentIndex)!
+        let task = Task(name: name.text!, notes: notes.text ?? "", priority: Priority(rawValue: priority.selectedSegmentIndex)!)
         do {
             try type.dataManager().add(task)
             performSegue(withIdentifier: "ExitFromNewTask", sender: nil)

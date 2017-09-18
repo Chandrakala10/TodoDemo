@@ -1,5 +1,5 @@
 //
-//  TaskManager.swift
+//  RealmManager.swift
 //  TodoDemo
 //
 //  Created by Chandrakala Neerukonda on 9/18/17.
@@ -28,6 +28,13 @@ final class RealmManager: DataManager{
     func delete(_ task: Task) throws {
         try realm.write {
          realm.delete(task)
+        }
+    }
+    
+    func update(old task: Task, withNew new: Task) throws {
+        try realm.write {
+            task.notes = new.notes
+            task.priority = new.priority
         }
     }
     
