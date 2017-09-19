@@ -14,20 +14,34 @@ class MasterViewController: UITableViewController, ErrorDisplay {
     lazy var taskManager = type.dataManager()
     var tasks: [Task]!
     private var selected: SortOptions = .none
+    let searchController = UISearchController(searchResultsController: nil)
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = editButtonItem
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? TaskViewController
-        }
         tasks = taskManager.tasks()
+        configureSearchController()
+        guard let split = splitViewController else { return }
+        let controllers = split.viewControllers
+        detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? TaskViewController
+        
+    }
+    
+    func configureSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.dimsBackgroundDuringPresentation = false
+        tableView.tableHeaderView = searchController.searchBar
     }
     
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchController.dismiss(animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -125,5 +139,15 @@ class MasterViewController: UITableViewController, ErrorDisplay {
         }
     }
     
+    
+}
+
+extension MasterViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
+        taskManager.filter(name: searchText)
+        tasks = taskManager.tasks()
+        tableView.reloadData()
+    }
 }
 

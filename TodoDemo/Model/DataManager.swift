@@ -46,6 +46,7 @@ protocol DataManager {
     func add(_ task: Task) throws
     func delete(_ task: Task) throws
     func update(old task: Task, withNew new: Task) throws
+    func filter(name: String)
     func tasks() -> [Task]
     func sort(_ option: SortOptions)
 }

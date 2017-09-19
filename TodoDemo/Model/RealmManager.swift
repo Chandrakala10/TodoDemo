@@ -12,11 +12,10 @@ import RealmSwift
 final class RealmManager: DataManager{
     static var shared: DataManager = RealmManager()
     private let realm = try! Realm()
-    
     private var list: Results<Task> {
         return realm.objects(Task.self)
     }
-    
+    private var filteredList: Results<Task>?
     private var sortedList: Results<Task>?
     
     func add(_ task: Task) throws {
@@ -38,11 +37,24 @@ final class RealmManager: DataManager{
         }
     }
     
-    func tasks() -> [Task] {
-        guard let sortedList = sortedList else {
-            return list.map { return $0 }
+    func filter(name: String) {
+        guard !name.isEmpty else {
+            filteredList = nil
+            return
         }
-        return sortedList.map { return $0 }
+        let searchList = sortedList != nil ? sortedList : list
+        filteredList = searchList?.filter("name CONTAINS [c] %@", name)
+    }
+    
+    func tasks() -> [Task] {
+        guard let filteredList = filteredList else {
+            guard let sortedList = sortedList else {
+                return list.map { return $0 }
+            }
+            return sortedList.map { return $0 }
+            
+        }
+        return filteredList.map { return $0 }
     }
     
     func sort(_ option: SortOptions) {
