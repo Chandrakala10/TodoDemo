@@ -8,7 +8,25 @@
 
 import UIKit
 
+enum Segues {
+    static let showDetail = "showDetail"
+    static let exitFromNewTask = "ExitFromNewTask"
+}
+
 class MasterViewController: UITableViewController, ErrorDisplay {
+    
+    enum Constants {
+        enum Strings {
+            static let actionSheetTitle = NSLocalizedString("Sort Options", tableName: "task", comment: "Sort options title")
+            static let latest = NSLocalizedString("Latest", tableName: "task", comment: "Latest options title")
+            static let hightToLow = NSLocalizedString("High to low priority", tableName: "task", comment: "High to low priority option title")
+            static let lowToHigh = NSLocalizedString("Low to high priority", tableName: "task", comment: "Low to high priority option title")
+            static let removeSort = NSLocalizedString("Remove Sort", tableName: "task", comment: "Remove Sort option title")
+            static let cancel = NSLocalizedString("Cancel", tableName: "task", comment: "Cancel option title")
+        }
+        
+        static let checked = "checked"
+    }
     
     var detailViewController: TaskViewController? = nil
     lazy var taskManager = type.dataManager()
@@ -55,19 +73,17 @@ class MasterViewController: UITableViewController, ErrorDisplay {
     // MARK: - Segues
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let object = tasks[indexPath.row]
-                let controller = (segue.destination as! UINavigationController).topViewController as! TaskViewController
-                controller.state = .view(object)
-                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
-            }
-        }
+        guard let indexPath = tableView.indexPathForSelectedRow,
+            segue.identifier == Segues.showDetail  else { return }
+        let object = tasks[indexPath.row]
+        let controller = (segue.destination as! UINavigationController).topViewController as! TaskViewController
+        controller.state = .view(object)
+        controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+        controller.navigationItem.leftItemsSupplementBackButton = true
     }
     
     @IBAction func unwindToThisViewController(segue: UIStoryboardSegue) {
-        guard segue.identifier == "ExitFromNewTask" else {
+        guard segue.identifier == Segues.exitFromNewTask else {
             return
         }
         tasks = taskManager.tasks()
@@ -75,18 +91,18 @@ class MasterViewController: UITableViewController, ErrorDisplay {
     }
     
     @IBAction func tappedSort() {
-        let alert = UIAlertController(title: "Sort Options", message: "", preferredStyle: .actionSheet)
-        let date = UIAlertAction(title: "Latest", style: .default) { [weak self] action in
+        let alert = UIAlertController(title: Constants.Strings.actionSheetTitle, message: "", preferredStyle: .actionSheet)
+        let date = UIAlertAction(title: Constants.Strings.latest, style: .default) { [weak self] action in
             self?.sortTask(with: .creadtedDate)
         }
-        let highToLow = UIAlertAction(title: "High to low priority", style: .default) { [weak self] action in
+        let highToLow = UIAlertAction(title: Constants.Strings.hightToLow, style: .default) { [weak self] action in
             self?.sortTask(with: .hightoLowPriority)
         }
-        let lowToHigh = UIAlertAction(title: "Low to high priority", style: .default) { [weak self] action in
+        let lowToHigh = UIAlertAction(title: Constants.Strings.lowToHigh, style: .default) { [weak self] action in
             self?.sortTask(with: .lowtoHignPriority)
         }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let clearSort = UIAlertAction(title: "Remove Sort", style: .destructive) { [weak self] action in
+        let cancel = UIAlertAction(title: Constants.Strings.cancel, style: .cancel, handler: nil)
+        let clearSort = UIAlertAction(title: Constants.Strings.removeSort, style: .destructive) { [weak self] action in
             self?.sortTask(with: .none)
         }
         alert.addAction(date)
@@ -95,10 +111,10 @@ class MasterViewController: UITableViewController, ErrorDisplay {
         alert.addAction(clearSort)
         alert.addAction(cancel)
         alert.actions.forEach { action in
-            action.setValue("false", forKey: "checked")
+            action.setValue("false", forKey: Constants.checked)
         }
         if .none != selected {
-            alert.actions[selected.rawValue].setValue("true", forKey: "checked")
+            alert.actions[selected.rawValue].setValue("true", forKey: Constants.checked)
         }
         present(alert, animated: true, completion: nil)
     }

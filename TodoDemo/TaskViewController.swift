@@ -77,7 +77,7 @@ class TaskViewController: UIViewController, ErrorDisplay {
         let task = Task(name: name.text!, notes: notes.text ?? "", priority: Priority(rawValue: priority.selectedSegmentIndex)!)
         do {
             try type.dataManager().add(task)
-            performSegue(withIdentifier: "ExitFromNewTask", sender: nil)
+            performSegue(withIdentifier: Segues.exitFromNewTask, sender: nil)
         }
         catch let error {
             display(error)
