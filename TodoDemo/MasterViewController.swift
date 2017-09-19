@@ -15,6 +15,9 @@ class MasterViewController: UITableViewController, ErrorDisplay {
     var tasks: [Task]!
     private var selected: SortOptions = .none
     let searchController = UISearchController(searchResultsController: nil)
+    
+    // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

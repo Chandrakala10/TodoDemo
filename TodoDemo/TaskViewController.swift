@@ -34,6 +34,8 @@ class TaskViewController: UIViewController, ErrorDisplay {
         }
     }
     
+    // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -82,7 +84,11 @@ class TaskViewController: UIViewController, ErrorDisplay {
         }
     }
     
-    @IBAction func texfieldEditted(_ sender: Any) {
+    @IBAction func texfieldEditted(_ sender: UITextField) {
+        guard let text = sender.text?.trimmingCharacters(in: CharacterSet.whitespaces), !text.isEmpty else {
+            save.isEnabled = false
+            return
+        }
         save.isEnabled = true
     }
     
